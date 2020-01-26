@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 // Components
 import Text from './Text';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const Container = styled.nav`
   width: ${props => props.minimize ? "4rem" : "16rem"};
@@ -86,11 +87,28 @@ const Sidebar = ({
   const renderLinks = (links) => (
     links.map((link, i) => {
       const Icon = link.icon ? styled(link.icon)`${iconStyles}` : null;
+
+      if (minimize) {
+        return (
+          <NavListItem key={i} active={link.active}>
+            <OverlayTrigger
+              placement="right"
+              delay={{ show: 250, hide: 200 }}
+              overlay={<Tooltip>{link.name}</Tooltip>}
+            >
+              <LinkStyled to={link.path} minimize={minimize ? 1 : 0}>
+                { link.icon && <Icon minimize={minimize ? 1 : 0} /> }
+              </LinkStyled>
+            </OverlayTrigger>
+          </NavListItem>
+        );
+      }
+
       return (
         <NavListItem key={i} active={link.active}>
           <LinkStyled to={link.path} minimize={minimize ? 1 : 0}>
             { link.icon && <Icon minimize={minimize ? 1 : 0} /> }
-            { !minimize && <Text light={true}>{link.name}</Text> }
+            <Text light={true}>{link.name}</Text>
           </LinkStyled>
         </NavListItem>
       );
