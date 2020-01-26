@@ -3,10 +3,20 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { useEventListener } from '../hooks';
 import styled from 'styled-components';
 // Components
-import { MdMenu } from 'react-icons/md';
+import {
+  MdMenu,
+  MdSettings, 
+  MdHome,
+  MdThumbUp,
+  MdVisibility,
+  MdCreditCard,
+  MdImage
+} from 'react-icons/md';
 import Sidebar from '../components/Sidebar';
 import Text from '../components/Text';
 import Navbar from 'react-bootstrap/Navbar';
+import Dashboard from './Dashboard';
+import Customers from './Customers';
 
 const Main = styled.main`
   margin-left: ${props => props.offset};
@@ -66,11 +76,56 @@ const Affiliates = ({ match, location }) => {
       title = pathname;
   }
 
+  // Sidebar links
+  const topLinks = [
+    { 
+      icon: MdHome,
+      name: "Dashboard",
+      path: "/",
+      active: pathname === ""
+    },
+    { 
+      icon: MdThumbUp,
+      name: "Referred customers",
+      path: "/referred-customers",
+      active: pathname === "referred-customers"
+    },
+    { 
+      icon: MdVisibility,
+      name: "Referred visitors",
+      path: "/referred-visitors",
+      active: pathname === "referred-visitors",
+    },
+    { 
+      icon: MdCreditCard,
+      name: "Payments",
+      path: "/payments",
+      active: pathname === "payments",
+    },
+    { 
+      icon: MdImage,
+      name: "Promo material",
+      path: "/material",
+      active: pathname === "material",
+    }
+  ];
+
+  const bottomLinks = [
+    { 
+      icon: MdSettings,
+      name: "Settings",
+      path: "/settings",
+      active: pathname === "settings",
+    }
+  ];
+
   return (
     <div>
       <Sidebar 
         minimize={minimize} 
         show={showSidebar}
+        topLinks={topLinks}
+        bottomLinks={bottomLinks}
       />
       <Main offset={offset}>
         <NavbarStyled>
@@ -78,11 +133,12 @@ const Affiliates = ({ match, location }) => {
           <Text capitalize>{title}</Text>
         </NavbarStyled>
         <Switch>
-          <Route exact path={`${match.path}/referred-customers`} component={null} />
-          <Route exact path={`${match.path}/referred-visitors`} component={null} />
-          <Route exact path={`${match.path}/payments`} component={null} />
-          <Route exact path={`${match.path}/material`} component={null} />
-          <Route exact path={`${match.path}/settings`} component={null} />
+          <Route exact path={`${match.path}/referred-customers`} component={Customers} />
+          <Route exact path={`${match.path}/referred-visitors`} component={Customers} />
+          <Route exact path={`${match.path}/payments`} component={Customers} />
+          <Route exact path={`${match.path}/material`} component={Customers} />
+          <Route exact path={`${match.path}/settings`} component={Customers} />
+          <Route exact path={`${match.path}`} component={Dashboard} />
         </Switch>
       </Main>
     </div>

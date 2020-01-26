@@ -10,7 +10,7 @@ import Affiliates from './routes/Affiliates';
 const App = () => (
   <Router>
     <Switch>
-      <Route exact path="/" component={Affiliates} />
+      <Route path="/" component={Affiliates} />
     </Switch>>
   </Router>
 );

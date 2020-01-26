@@ -3,14 +3,6 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 // Components
 import Text from './Text';
-import { 
-  MdSettings, 
-  MdHome,
-  MdThumbUp,
-  MdVisibility,
-  MdCreditCard,
-  MdImage
-} from 'react-icons/md';
 
 const Container = styled.nav`
   width: ${props => props.minimize ? "4rem" : "16rem"};
@@ -53,9 +45,9 @@ const NavList = styled.ul`
 const NavListItem = styled.li`
   display: flex;
   flex-direction: row;
-  margin-bottom: 15px;
-  padding: 10px 15px;
   cursor: pointer;
+  margin: 10px 0;
+  background-color: ${props => props.active ? "rgb(254, 92, 92)" : null};
 
   &:hover {
     color: #fff;
@@ -66,8 +58,11 @@ const NavListItem = styled.li`
 const LinkStyled = styled(Link)`
   display: flex;
   flex-direction: row;
+  padding: 10px 15px;
+  width: 100%;
   color: #fff;
   align-items: center;
+  justify-content: ${props => props.minimize ? "center" : null};
 
   &:hover {
     text-decoration: none;
@@ -77,17 +72,23 @@ const LinkStyled = styled(Link)`
 
 const iconStyles = css`
   font-size: 1.3em;
-  margin-right: ${props => props.minimize ? "0" : "15px"};
+  margin-right: ${props => props.minimize ? "0" : "10px"};
   color: #fff;
 `;
 
-const Sidebar = ({ minimize = false, show = true }) => {
+const Sidebar = ({ 
+  minimize = false, 
+  show = true,
+  topLinks = [],
+  bottomLinks = []
+}) => {
+
   const renderLinks = (links) => (
     links.map((link, i) => {
       const Icon = link.icon ? styled(link.icon)`${iconStyles}` : null;
       return (
-        <NavListItem key={i}>
-          <LinkStyled to={link.path}>
+        <NavListItem key={i} active={link.active}>
+          <LinkStyled to={link.path} minimize={minimize ? 1 : 0}>
             { link.icon && <Icon minimize={minimize ? 1 : 0} /> }
             { !minimize && <Text light={true}>{link.name}</Text> }
           </LinkStyled>
@@ -104,48 +105,8 @@ const Sidebar = ({ minimize = false, show = true }) => {
       <Content>
         <LogoContainer />
         <Menu>
-          <NavList>
-            { 
-              renderLinks([
-                { 
-                  icon: MdHome,
-                  name: "Dashboard",
-                  path: "/"
-                },
-                { 
-                  icon: MdThumbUp,
-                  name: "Referred customers",
-                  path: "/referred-customers"
-                },
-                { 
-                  icon: MdVisibility,
-                  name: "Referred visitors",
-                  path: "/referred-visitors"
-                },
-                { 
-                  icon: MdCreditCard,
-                  name: "Payments",
-                  path: "/payments"
-                },
-                { 
-                  icon: MdImage,
-                  name: "Promo material",
-                  path: "/material"
-                }
-              ])
-            }
-          </NavList>
-          <NavList>
-          { 
-            renderLinks([
-              { 
-                icon: MdSettings,
-                name: "Settings",
-                path: "/settings"
-              }
-            ])
-          }
-        </NavList>
+          <NavList>{renderLinks(topLinks)}</NavList>
+          <NavList>{renderLinks(bottomLinks)}</NavList>
         </Menu>
       </Content>
     </Container>
