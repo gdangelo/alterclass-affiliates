@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  max-width: 250px;
+  width: 250px;
   background-color: #fff;
   cursor: pointer;
   display: flex;
