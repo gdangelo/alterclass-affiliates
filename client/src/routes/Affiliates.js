@@ -81,31 +81,31 @@ const Affiliates = ({ match, location }) => {
     { 
       icon: MdHome,
       name: "Dashboard",
-      path: "/",
+      path: match.path,
       active: pathname === ""
     },
     { 
       icon: MdThumbUp,
       name: "Referred customers",
-      path: "/referred-customers",
+      path: `${match.path}/referred-customers`,
       active: pathname === "referred-customers"
     },
     { 
       icon: MdVisibility,
       name: "Referred visitors",
-      path: "/referred-visitors",
+      path: `${match.path}/referred-visitors`,
       active: pathname === "referred-visitors",
     },
     { 
       icon: MdCreditCard,
       name: "Payments",
-      path: "/payments",
+      path: `${match.path}/payments`,
       active: pathname === "payments",
     },
     { 
       icon: MdImage,
       name: "Promo material",
-      path: "/material",
+      path: `${match.path}/material`,
       active: pathname === "material",
     }
   ];

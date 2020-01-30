@@ -72,7 +72,7 @@ const LinkStyled = styled(Link)`
 `;
 
 const iconStyles = css`
-  font-size: 1.3em;
+  font-size: 1.6em;
   margin-right: ${props => props.minimize ? "0" : "10px"};
   color: #fff;
 `;
